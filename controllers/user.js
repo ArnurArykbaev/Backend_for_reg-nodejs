@@ -1,18 +1,43 @@
 const {
   models: { User },
 } = require("../models");
-const db = require("../models");
+
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   create: async (request, response) => {
-    if (await User.findOne({ where: { username: request.body.username } })) {
-      response.send('Username "' + request.body.username + '" is already registered');
-    } else if (request.body.username && request.body.password) {
-      const { username, password } = request.body;
+    const salt = await bcrypt.genSalt(10);
+    if (await User.findOne({ where: { email: request.body.email } })) {
+      response.send('Email "' + request.body.email + '" is already registered');
+    } else if (
+      await User.findOne({ where: { username: request.body.username } })
+    ) {
+      response.send(
+        'Username "' + request.body.username + '" is already registered'
+      );
+    } else if (
+      request.body.user_id &&
+      request.body.username &&
+      request.body.password &&
+      request.body.email &&
+      request.body.age &&
+      request.body.sex
+    ) {
+      const { user_id, username, email, country, city, age, sex } =
+        request.body;
+
+      const password = await bcrypt.hashSync(request.body.password, salt);
 
       await User.create({
+        user_id,
         username,
         password,
+        email,
+        country,
+        city,
+        age,
+        sex,
       });
       response.send('Username "' + request.body.username + '" is registered');
     } else {

@@ -5,6 +5,7 @@ const db = require('./models');
 
 const users = require("./routes/users");
 const posts = require("./routes/posts");
+const register = require("./routes/register");
 const login = require("./routes/login");
 
 app.use(express.json());
@@ -19,6 +20,7 @@ app.set("views", path.join(__dirname, "./views"));
 
 app.use("/users", users);
 app.use("/posts", posts);
+app.use("/register", register);
 app.use("/login", login);
 
 
