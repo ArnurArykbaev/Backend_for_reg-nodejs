@@ -1,7 +1,8 @@
 const express = require("express");
-const app = express();
 const path = require("path");
 const db = require('./models');
+var cors = require('cors');
+const app = express();
 
 const users = require("./routes/users");
 const posts = require("./routes/posts");
@@ -9,7 +10,9 @@ const register = require("./routes/register");
 const login = require("./routes/login");
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));app.use(cors({
+  origin: 'http://localhost:8080'
+}));
 
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "./views"));
