@@ -17,20 +17,18 @@ module.exports = {
         'Username "' + request.body.username + '" is already registered'
       );
     } else if (
-      request.body.user_id &&
       request.body.username &&
       request.body.password &&
       request.body.email &&
       request.body.age &&
       request.body.sex
     ) {
-      const { user_id, username, email, country, city, age, sex } =
+      const { username, email, country, city, age, sex } =
         request.body;
 
       const password = await bcrypt.hashSync(request.body.password, salt);
 
       await User.create({
-        user_id,
         username,
         password,
         email,
@@ -41,7 +39,7 @@ module.exports = {
       });
       response.send('Username "' + request.body.username + '" is registered');
     } else {
-      response.send("Not added to the database");
+      response.send("Not added to the database, your data may incorrect");
     }
   },
 };

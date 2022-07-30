@@ -41,14 +41,14 @@ app.get("/", [
     response.send("This is middleware number 2!");
   },
 
-  (request, response, next) => {
+/*   (request, response, next) => {
     console.log("middleware 3");
     next();
   },
 
   (request, response, next) => {
     response.send("This is middleware number 4!");
-  },
+  }, */
 ]);
 
 app.listen(1234);
